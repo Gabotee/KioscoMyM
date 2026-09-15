@@ -1,0 +1,28 @@
+﻿# ── Entorno ────────────────────────────────────────────────
+.env
+.env.local
+.env.production
+
+# ── Dependencias ────────────────────────────────────────────
+backend/node_modules/
+
+# ── Base de datos local ─────────────────────────────────────
+backend/data/
+*.db
+*.sqlite
+*.sqlite3
+
+# ── Logs ────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Sistema operativo ───────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Editores ────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo

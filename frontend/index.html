@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Kiosco MyM — Iniciar sesión</title>
+  <meta name="description"
+    content="Sistema de gestión de stock para Kiosco MyM. Iniciá sesión para acceder al panel de control." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <script src="/js/theme.js"></script>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <style>
+    /* ─── Login page specific ─── */
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Animated background orbs */
+    .bg-orbs {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      animation: orbFloat 8s ease-in-out infinite;
+    }
+
+    .orb-1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(108, 99, 255, 0.25) 0%, transparent 70%);
+      top: -150px;
+      left: -150px;
+      animation-delay: 0s;
+    }
+
+    .orb-2 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(45, 212, 191, 0.2) 0%, transparent 70%);
+      bottom: -100px;
+      right: -100px;
+      animation-delay: -3s;
+    }
+
+    .orb-3 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(108, 99, 255, 0.12) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation-delay: -6s;
+    }
+
+    @keyframes orbFloat {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      33% {
+        transform: translate(30px, -20px) scale(1.05);
+      }
+
+      66% {
+        transform: translate(-20px, 30px) scale(0.95);
+      }
+    }
+
+    /* Login card */
+    .login-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 420px;
+      padding: 20px;
+      animation: slideUp 0.5s ease;
+    }
+
+    .login-card {
+      background: rgba(15, 15, 30, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 40px 36px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(108, 99, 255, 0.1);
+    }
+
+    [data-theme="light"] .login-card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(108, 99, 255, 0.12);
+      box-shadow: 0 20px 60px rgba(108, 99, 255, 0.12), 0 0 0 1px rgba(108, 99, 255, 0.08);
+    }
+
+    [data-theme="light"] .login-input {
+      background: rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      color: var(--text-primary);
+    }
+    [data-theme="light"] .login-input:focus {
+      background: rgba(108, 99, 255, 0.06);
+    }
+
+    .theme-toggle-login {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 10;
+    }
+
+    .login-brand {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .login-logo {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      box-shadow: 0 8px 32px rgba(108, 99, 255, 0.5), 0 0 0 3px rgba(108, 99, 255, 0.2);
+      animation: logoPulse 3s ease-in-out infinite;
+      overflow: hidden;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .login-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    @keyframes logoPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 8px 24px rgba(108, 99, 255, 0.45);
+      }
+
+      50% {
+        box-shadow: 0 8px 32px rgba(108, 99, 255, 0.7);
+      }
+    }
+
+    .login-title {
+      font-size: 22px;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+    }
+
+    .login-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .form-group-login {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+      transition: color var(--transition);
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon svg {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .input-wrapper:focus-within .input-icon {
+      color: var(--accent);
+    }
+
+    .login-input {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 15px;
+      padding: 13px 14px 13px 44px;
+      width: 100%;
+      outline: none;
+      transition: all var(--transition);
+    }
+
+    .login-input:focus {
+      border-color: var(--border-focus);
+      background: rgba(108, 99, 255, 0.08);
+      box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.15);
+    }
+
+    .login-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    /* Attempts indicator */
+    .attempts-bar {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .attempt-dot {
+      flex: 1;
+      height: 3px;
+      border-radius: 2px;
+      background: rgba(248, 113, 113, 0.8);
+      transition: background 0.3s ease;
+    }
+
+    .attempt-dot.empty {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Login button */
+    .login-btn {
+      background: var(--gradient);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px;
+      width: 100%;
+      cursor: pointer;
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 16px rgba(108, 99, 255, 0.4);
+      margin-top: 6px;
+    }
+
+    .login-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(108, 99, 255, 0.55);
+    }
+
+    .login-btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .login-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Error message */
+    .error-msg {
+      background: rgba(248, 113, 113, 0.12);
+      border: 1px solid rgba(248, 113, 113, 0.25);
+      border-radius: 8px;
+      color: var(--danger);
+      font-size: 13px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      animation: slideDown 0.3s ease;
+    }
+
+    .error-msg.hidden {
+      display: none;
+    }
+
+    /* Lock icon */
+    .lock-icon {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .lock-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--danger);
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .login-footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Theme toggle -->
+  <button class="theme-toggle theme-toggle-login" onclick="toggleTheme()" id="theme-toggle-btn" title="Cambiar tema" aria-label="Cambiar tema">☀️</button>
+
+  <!-- Animated background -->
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="login-wrapper">
+    <div class="login-card">
+
+      <!-- Brand -->
+      <div class="login-brand">
+        <div class="login-logo">
+          <img src="/uploads/Logo_Kiosco_MyM.jpeg" alt="Logo Kiosco MyM" />
+        </div>
+        <h1 class="login-title">Kiosco MyM</h1>
+        <p class="login-subtitle">Sistema de gestión de stock</p>
+      </div>
+
+      <!-- Error message -->
+      <div id="error-msg" class="error-msg hidden">
+        <span class="lock-icon" id="error-icon">
+          <svg id="error-svg-warning" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <svg id="error-svg-lock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="hidden"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </span>
+        <span id="error-text">Error</span>
+      </div>
+
+      <!-- Attempts indicator (oculto hasta que haya errores) -->
+      <div id="attempts-container" class="hidden" style="margin: 10px 0;">
+        <div style="font-size:12px; color: var(--text-muted); margin-bottom:6px;">
+          Intentos restantes
+        </div>
+        <div class="attempts-bar">
+          <div class="attempt-dot" id="dot-1"></div>
+          <div class="attempt-dot" id="dot-2"></div>
+          <div class="attempt-dot" id="dot-3"></div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <form id="login-form" class="login-form" autocomplete="off">
+
+        <div class="form-group-login">
+          <label class="form-label" for="username">Usuario</label>
+          <div class="input-wrapper">
+            <span class="input-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+            <input type="text" id="username" name="username" class="login-input" placeholder="Ingresá tu usuario"
+              autocomplete="username" required autofocus />
+          </div>
+        </div>
+
+        <div class="form-group-login">
+          <label class="form-label" for="password">Contraseña</label>
+          <div class="input-wrapper">
+            <span class="input-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+            <input type="password" id="password" name="password" class="login-input" placeholder="Ingresá tu contraseña"
+              autocomplete="current-password" required />
+          </div>
+        </div>
+
+        <button type="submit" id="login-btn" class="login-btn">
+          <span id="btn-text">Iniciar sesión</span>
+          <div id="btn-spinner" class="spinner hidden"
+            style="border-color:rgba(255,255,255,0.3);border-top-color:white;width:16px;height:16px;"></div>
+        </button>
+
+      </form>
+
+      <div class="login-footer">
+        Kiosco MyM &copy; 2026 — Sistema de Stock
+      </div>
+
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script>
+    // Si ya hay token válido, redirigir al dashboard
+    (async function checkExistingAuth() {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          await api.verify();
+          window.location.href = '/dashboard.html';
+        } catch (e) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+        }
+      }
+    })();
+
+    const form = document.getElementById('login-form');
+    const errorMsg = document.getElementById('error-msg');
+    const errorText = document.getElementById('error-text');
+    const errorIcon = document.getElementById('error-icon');
+    const loginBtn = document.getElementById('login-btn');
+    const btnText = document.getElementById('btn-text');
+    const btnSpinner = document.getElementById('btn-spinner');
+    const attemptsContainer = document.getElementById('attempts-container');
+    const MAX = 3;
+
+    function setLoading(loading) {
+      loginBtn.disabled = loading;
+      btnText.textContent = loading ? 'Verificando...' : 'Iniciar sesión';
+      btnSpinner.classList.toggle('hidden', !loading);
+    }
+
+    function showError(message, isLock = false) {
+      document.getElementById('error-svg-warning').classList.toggle('hidden', isLock);
+      document.getElementById('error-svg-lock').classList.toggle('hidden', !isLock);
+      errorText.textContent = message;
+      errorMsg.classList.remove('hidden');
+    }
+
+    function hideError() {
+      errorMsg.classList.add('hidden');
+    }
+
+    function updateAttemptsBar(attemptsLeft) {
+      attemptsContainer.classList.remove('hidden');
+      for (let i = 1; i <= MAX; i++) {
+        const dot = document.getElementById(`dot-${i}`);
+        dot.classList.toggle('empty', i > attemptsLeft);
+      }
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError();
+      setLoading(true);
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+
+      try {
+        const data = await api.login(username, password);
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        btnText.textContent = 'Redirigiendo...';
+        setTimeout(() => { window.location.href = '/dashboard.html'; }, 400);
+
+      } catch (err) {
+        setLoading(false);
+        const errData = err.data || {};
+
+        if (errData.locked) {
+          showError(err.message, true);
+          attemptsContainer.classList.add('hidden');
+          loginBtn.disabled = true;
+
+          // Reactivar después del bloqueo (si hay minutesLeft)
+          if (errData.minutesLeft) {
+            setTimeout(() => {
+              loginBtn.disabled = false;
+              hideError();
+              attemptsContainer.classList.add('hidden');
+              updateAttemptsBar(MAX);
+            }, errData.minutesLeft * 60 * 1000);
+          }
+        } else {
+          showError(err.message);
+          if (errData.attemptsLeft !== undefined) {
+            updateAttemptsBar(errData.attemptsLeft);
+          }
+        }
+
+        document.getElementById('password').value = '';
+        document.getElementById('password').focus();
+      }
+    });
+  </script>
+</body>
+
+</html>
