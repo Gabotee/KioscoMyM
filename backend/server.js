@@ -52,7 +52,7 @@ const loginLimiter = rateLimit({
 app.use('/api/auth/login', loginLimiter);
 
 // Servir archivos estáticos del frontend
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, 'frontend')));
 
 // Rutas API
 app.use('/api/auth', authRoutes);
@@ -63,7 +63,7 @@ app.use('/api/sales', salesRoutes);
 
 // Ruta fallback → sirve el index (login)
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+  res.sendFile(path.join(__dirname, 'frontend/index.html'));
 });
 
 // Manejo de errores global
