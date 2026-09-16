@@ -64,7 +64,30 @@ app.use('/api/movements', movementsRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/sales', salesRoutes);
 
-// Ruta fallback → sirve el index (login)
+// ── Rutas de páginas ──────────────────────────────────────
+// Raíz e inicio de sesión
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, './frontend/index.html'));
+});
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, './frontend/index.html'));
+});
+
+// Secciones de la app
+app.get('/ventas', (req, res) => {
+  res.sendFile(path.join(__dirname, './frontend/ventas.html'));
+});
+app.get('/stock', (req, res) => {
+  res.sendFile(path.join(__dirname, './frontend/stock.html'));
+});
+app.get('/movimientos', (req, res) => {
+  res.sendFile(path.join(__dirname, './frontend/movimientos.html'));
+});
+app.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, './frontend/dashboard.html'));
+});
+
+// Fallback → login
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './frontend/index.html'));
 });

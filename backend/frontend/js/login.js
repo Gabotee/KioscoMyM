@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (token) {
     try {
       await api.verify();
-      window.location.href = '/dashboard.html';
+      window.location.href = '/dashboard';
     } catch (e) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -67,7 +67,7 @@ form.addEventListener('submit', async (e) => {
     localStorage.setItem('token', data.token);
     localStorage.setItem('user', JSON.stringify(data.user));
     btnText.textContent = 'Redirigiendo...';
-    setTimeout(() => { window.location.href = '/dashboard.html'; }, 400);
+    setTimeout(() => { window.location.href = '/dashboard'; }, 400);
 
   } catch (err) {
     setLoading(false);

@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const btnNuevoMovimiento = document.getElementById('btn-nuevo-movimiento');
   if (btnNuevoMovimiento) {
     btnNuevoMovimiento.addEventListener('click', function () {
-      window.location.href = '/stock.html';
+      window.location.href = '/stock';
     });
   }
 });

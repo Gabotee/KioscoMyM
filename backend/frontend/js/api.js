@@ -33,7 +33,7 @@ async function apiRequest(method, endpoint, body = null) {
     // Token expirado o inválido → redirigir al login
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    window.location.href = '/index.html';
+    window.location.href = '/login';
     return;
   }
 
@@ -112,7 +112,7 @@ function showToast(message, type = 'success', duration = 3000) {
 async function requireAuth() {
   const token = getToken();
   if (!token) {
-    window.location.href = '/index.html';
+    window.location.href = '/login';
     return null;
   }
 
@@ -122,7 +122,7 @@ async function requireAuth() {
   } catch (e) {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    window.location.href = '/index.html';
+    window.location.href = '/login';
     return null;
   }
 }
@@ -131,7 +131,7 @@ async function requireAuth() {
 function logout() {
   localStorage.removeItem('token');
   localStorage.removeItem('user');
-  window.location.href = '/index.html';
+  window.location.href = '/login';
 }
 
 // === Format helpers ===
@@ -162,10 +162,10 @@ function getStockBadge(stock, minStock) {
 
 // Resalta el nav link activo
 function setActiveNav() {
-  const currentPage = window.location.pathname.split('/').pop() || 'dashboard.html';
+  const currentPath = window.location.pathname || '/dashboard';
   document.querySelectorAll('.nav-link').forEach(link => {
     const href = link.getAttribute('href') || '';
-    if (href.includes(currentPage) || (currentPage === '' && href.includes('dashboard'))) {
+    if (href === currentPath || (currentPath === '/' && href === '/dashboard')) {
       link.classList.add('active');
     }
   });
