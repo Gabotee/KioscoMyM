@@ -15,6 +15,9 @@ const { initDatabase } = require('./src/config/database');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// ── Trust proxy (necesario detrás del proxy del hosting) ───
+app.set('trust proxy', 1);
+
 // ── Seguridad HTTP headers (Helmet + CSP) ──────────────────
 app.use(helmet({
   contentSecurityPolicy: {
