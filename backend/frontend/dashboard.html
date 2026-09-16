@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -35,7 +35,7 @@
 <body>
 
   <!-- Sidebar overlay (mobile) -->
-  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
   <div class="app-wrapper">
 
@@ -95,7 +95,7 @@
             <div class="user-role">Administrador</div>
           </div>
         </div>
-        <button onclick="logout()" class="btn btn-secondary w-full mt-2 btn-icon-svg" style="font-size:13px;">
+        <button data-action="logout" class="btn btn-secondary w-full mt-2 btn-icon-svg" style="font-size:13px;">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
             <polyline points="16 17 21 12 16 7" />
@@ -111,7 +111,7 @@
 
       <div class="page-header">
         <div style="display:flex; align-items:center; gap:12px;">
-          <button class="hamburger-btn" id="hamburger-btn" onclick="toggleSidebar()" aria-label="Abrir menú">
+          <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
           <div>
@@ -121,8 +121,8 @@
         </div>
         <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
           <span id="current-date" style="color: var(--text-secondary); font-size:13px;"></span>
-          <button class="theme-toggle" onclick="toggleTheme()" id="theme-toggle-btn" title="Cambiar tema" aria-label="Cambiar tema">☀️</button>
-          <button class="btn btn-primary btn-sm btn-icon-svg" onclick="window.location.href='/stock.html'">
+          <button class="theme-toggle" id="theme-toggle-btn" title="Cambiar tema" aria-label="Cambiar tema">☀️</button>
+          <button class="btn btn-primary btn-sm btn-icon-svg" id="btn-nuevo-movimiento">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
@@ -224,24 +224,7 @@
 
   <script src="/js/api.js"></script>
   <script src="/js/dashboard.js"></script>
-  <script>
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('sidebar-overlay');
-      sidebar.classList.toggle('open');
-      overlay.classList.toggle('active');
-    }
-    function closeSidebar() {
-      document.getElementById('sidebar').classList.remove('open');
-      document.getElementById('sidebar-overlay').classList.remove('active');
-    }
-    // Close sidebar on nav link click (mobile)
-    document.querySelectorAll('.nav-link').forEach(function(link) {
-      link.addEventListener('click', function() {
-        if (window.innerWidth <= 768) closeSidebar();
-      });
-    });
-  </script>
+  <script src="/js/sidebar.js"></script>
 </body>
 
 </html>

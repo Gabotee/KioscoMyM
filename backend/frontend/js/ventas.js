@@ -1,7 +1,7 @@
 // ventas.js — Punto de Venta (Carrito)
 
 let cart = JSON.parse(localStorage.getItem('ventas_cart')) || [];
-let paymentMethod = localStorage.getItem('ventas_paymentMethod') || 'efectivo';
+let paymentMethod = null;
 let barcodeTimeout = null;
 
 function saveState() {
@@ -35,7 +35,8 @@ function saveState() {
     }, 200);
   });
 
-  setPaymentMethod(paymentMethod);
+  renderCart();
+  updateChangeCalcState();
 })();
 
 async function handleScan(barcode) {
@@ -119,9 +120,61 @@ function setPaymentMethod(method) {
   document.getElementById('btn-pay-efectivo').classList.remove('active');
   document.getElementById('btn-pay-transferencia').classList.remove('active');
   document.getElementById('btn-pay-qr').classList.remove('active');
-  document.getElementById(`btn-pay-${method}`).classList.add('active');
+  if (method) document.getElementById(`btn-pay-${method}`).classList.add('active');
   saveState();
   renderCart();
+  updateChangeCalcState();
+}
+
+function updateChangeCalcState() {
+  const card = document.getElementById('change-calc-card');
+  const hint = document.getElementById('change-disabled-hint');
+  if (!card) return;
+
+  const isEfectivo = paymentMethod === 'efectivo' && cart.length > 0;
+  card.style.opacity = isEfectivo ? '1' : '0.5';
+  card.style.pointerEvents = isEfectivo ? 'auto' : 'none';
+  hint.style.display = isEfectivo ? 'none' : 'block';
+
+  if (!isEfectivo) {
+    const input = document.getElementById('amount-received');
+    if (input) input.value = '';
+    const result = document.getElementById('change-result');
+    if (result) result.textContent = '$ 0.00';
+    const warning = document.getElementById('change-warning');
+    if (warning) warning.classList.add('hidden');
+  }
+
+  calcChange();
+}
+
+function calcChange() {
+  const { total } = calcTotals();
+  const totalDisplay = document.getElementById('change-total-display');
+  const resultEl = document.getElementById('change-result');
+  const warningEl = document.getElementById('change-warning');
+
+  if (totalDisplay) totalDisplay.textContent = formatCurrency(total);
+
+  if (paymentMethod !== 'efectivo' || cart.length === 0) return;
+
+  const amountInput = document.getElementById('amount-received');
+  const received = parseFloat(amountInput?.value) || 0;
+  const change = received - total;
+
+  if (received === 0) {
+    resultEl.textContent = '$ 0.00';
+    resultEl.style.color = 'var(--success)';
+    warningEl.classList.add('hidden');
+  } else if (change < 0) {
+    resultEl.textContent = formatCurrency(change);
+    resultEl.style.color = '#ef4444';
+    warningEl.classList.remove('hidden');
+  } else {
+    resultEl.textContent = formatCurrency(change);
+    resultEl.style.color = 'var(--success)';
+    warningEl.classList.add('hidden');
+  }
 }
 
 function calcTotals() {
@@ -151,6 +204,7 @@ function renderCart() {
         <div class="empty-state-text">Escanea un producto para empezar</div>
       </div>`;
     footer.classList.add('hidden');
+    updateChangeCalcState();
     return;
   }
 
@@ -187,15 +241,15 @@ function renderCart() {
         </td>
         <td>
           <div class="qty-controls-small" style="justify-content:center;">
-            <button class="qty-btn-small" onclick="updateQuantity(${index}, ${item.quantity - 1})">-</button>
-            <input type="number" class="cart-qty-input" value="${item.quantity}" onchange="updateQuantity(${index}, this.value)" min="1" max="${item.max_stock}" />
-            <button class="qty-btn-small" onclick="updateQuantity(${index}, ${item.quantity + 1})">+</button>
+            <button class="qty-btn-small" data-action="qty" data-index="${index}" data-delta="-1">-</button>
+            <input type="number" class="cart-qty-input" value="${item.quantity}" data-action="qty-input" data-index="${index}" min="1" max="${item.max_stock}" />
+            <button class="qty-btn-small" data-action="qty" data-index="${index}" data-delta="1">+</button>
           </div>
         </td>
         <td style="text-align:right; font-weight:600; color:var(--accent2);">${formatCurrency(lineSubtotal)}</td>
         ${isTransfer ? `<td style="text-align:right; font-size:13px; color:#f59e0b;">${lineSurcharge > 0 ? '+' + formatCurrency(lineSurcharge) : '-'}</td>` : ''}
         <td style="text-align:right;">
-          <button class="btn btn-danger btn-icon-sm" onclick="removeFromCart(${index})" title="Quitar">X</button>
+          <button class="btn btn-danger btn-icon-sm" data-action="remove" data-index="${index}" title="Quitar">X</button>
         </td>
       </tr>
     `;
@@ -224,6 +278,9 @@ function renderCart() {
 
   totalEl.textContent = formatCurrency(total);
   footer.classList.remove('hidden');
+
+  // Sincronizar panel de vuelto (habilita/deshabilita según carrito y método)
+  updateChangeCalcState();
 }
 
 async function checkout() {
@@ -255,8 +312,21 @@ async function checkout() {
     showToast(toastMsg, 'success', 5000);
 
     cart = [];
+    paymentMethod = null;
     saveState();
+
+    // Quitar selección de método de pago
+    document.getElementById('btn-pay-efectivo').classList.remove('active');
+    document.getElementById('btn-pay-transferencia').classList.remove('active');
+    document.getElementById('btn-pay-qr').classList.remove('active');
+
     renderCart();
+
+    // Limpiar cálculo de vuelto
+    const amountInput = document.getElementById('amount-received');
+    if (amountInput) amountInput.value = '';
+    updateChangeCalcState();
+
     document.getElementById('barcode-input').focus();
 
   } catch (e) {
@@ -271,3 +341,51 @@ async function checkout() {
 function esc(str) {
   return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
+
+// Listeners de botones estáticos
+document.addEventListener('DOMContentLoaded', function () {
+  // Limpiar carrito
+  const btnClear = document.getElementById('btn-clear-cart');
+  if (btnClear) btnClear.addEventListener('click', clearCart);
+
+  // Metodos de pago
+  const btnEfectivo = document.getElementById('btn-pay-efectivo');
+  if (btnEfectivo) btnEfectivo.addEventListener('click', function () { setPaymentMethod('efectivo'); });
+
+  const btnTransferencia = document.getElementById('btn-pay-transferencia');
+  if (btnTransferencia) btnTransferencia.addEventListener('click', function () { setPaymentMethod('transferencia'); });
+
+  const btnQr = document.getElementById('btn-pay-qr');
+  if (btnQr) btnQr.addEventListener('click', function () { setPaymentMethod('qr'); });
+
+  // Finalizar venta
+  const btnCheckout = document.getElementById('btn-checkout');
+  if (btnCheckout) btnCheckout.addEventListener('click', checkout);
+
+  // Monto recibido (calculo de vuelto)
+  const amountInput = document.getElementById('amount-received');
+  if (amountInput) amountInput.addEventListener('input', calcChange);
+});
+
+// Event delegation para botones dinámicos del carrito
+document.getElementById('cart-body').addEventListener('click', function (e) {
+  const btn = e.target.closest('[data-action]');
+  if (!btn) return;
+  const index = parseInt(btn.dataset.index);
+  const action = btn.dataset.action;
+
+  if (action === 'qty') {
+    const delta = parseInt(btn.dataset.delta);
+    const currentQty = cart[index]?.quantity || 1;
+    updateQuantity(index, currentQty + delta);
+  } else if (action === 'remove') {
+    removeFromCart(index);
+  }
+});
+
+document.getElementById('cart-body').addEventListener('change', function (e) {
+  if (e.target.dataset.action === 'qty-input') {
+    const index = parseInt(e.target.dataset.index);
+    updateQuantity(index, e.target.value);
+  }
+});

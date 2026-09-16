@@ -147,8 +147,8 @@ function renderTable(products) {
             <td>${getStockBadge(p.stock, p.min_stock)}</td>
             <td>
               <div class="actions-cell">
-                <button class="btn btn-secondary btn-icon-sm" title="Editar" onclick="openModal(${p.id})">✏️</button>
-                <button class="btn btn-danger btn-icon-sm" title="Eliminar" onclick="openDeleteModal(${p.id}, '${esc(p.name)}')">🗑️</button>
+                <button class="btn btn-secondary btn-icon-sm" title="Editar" data-action="edit" data-id="${p.id}">✏️</button>
+                <button class="btn btn-danger btn-icon-sm" title="Eliminar" data-action="delete" data-id="${p.id}" data-name="${esc(p.name)}">🗑️</button>
               </div>
             </td>
           </tr>
@@ -537,4 +537,73 @@ function onScanFailure(error) {
   // Ignorar errores de escaneo fallido constantes
 }
 
+// Listeners de botones estáticos (modales y toolbar)
+document.addEventListener('DOMContentLoaded', function () {
+  // Toolbar
+  const btnCamera = document.getElementById('btn-camera');
+  if (btnCamera) btnCamera.addEventListener('click', openCameraScanner);
 
+  const btnIngreso = document.getElementById('btn-ingreso');
+  if (btnIngreso) btnIngreso.addEventListener('click', openIngresoModal);
+
+  const btnAddProduct = document.getElementById('btn-add-product');
+  if (btnAddProduct) btnAddProduct.addEventListener('click', function () { openModal(); });
+
+  // Modal crear/editar
+  const btnCloseModal = document.getElementById('btn-close-modal');
+  if (btnCloseModal) btnCloseModal.addEventListener('click', closeModal);
+
+  const btnCancelModal = document.getElementById('btn-cancel-modal');
+  if (btnCancelModal) btnCancelModal.addEventListener('click', closeModal);
+
+  const btnSave = document.getElementById('btn-save');
+  if (btnSave) btnSave.addEventListener('click', saveProduct);
+
+  // Modal eliminar
+  const btnCloseDelete = document.getElementById('btn-close-delete');
+  if (btnCloseDelete) btnCloseDelete.addEventListener('click', closeDeleteModal);
+
+  const btnCancelDelete = document.getElementById('btn-cancel-delete');
+  if (btnCancelDelete) btnCancelDelete.addEventListener('click', closeDeleteModal);
+
+  const btnConfirmDelete = document.getElementById('btn-confirm-delete');
+  if (btnConfirmDelete) btnConfirmDelete.addEventListener('click', confirmDelete);
+
+  // Modal ingreso
+  const btnCloseIngreso = document.getElementById('btn-close-ingreso');
+  if (btnCloseIngreso) btnCloseIngreso.addEventListener('click', closeIngresoModal);
+
+  const btnCancelIngreso = document.getElementById('btn-cancel-ingreso');
+  if (btnCancelIngreso) btnCancelIngreso.addEventListener('click', closeIngresoModal);
+
+  const btnIngQtyMinus = document.getElementById('btn-ing-qty-minus');
+  if (btnIngQtyMinus) btnIngQtyMinus.addEventListener('click', function () { ingAdjustQty(-1); });
+
+  const btnIngQtyPlus = document.getElementById('btn-ing-qty-plus');
+  if (btnIngQtyPlus) btnIngQtyPlus.addEventListener('click', function () { ingAdjustQty(1); });
+
+  const btnIngConfirm = document.getElementById('ing-confirm-btn');
+  if (btnIngConfirm) btnIngConfirm.addEventListener('click', registerIngreso);
+
+  // Modal cámara
+  const btnCloseCamera = document.getElementById('btn-close-camera');
+  if (btnCloseCamera) btnCloseCamera.addEventListener('click', closeCameraScanner);
+
+  const btnCancelCamera = document.getElementById('btn-cancel-camera');
+  if (btnCancelCamera) btnCancelCamera.addEventListener('click', closeCameraScanner);
+});
+
+// Event delegation para botones dinámicos de la tabla de productos
+document.getElementById('table-wrapper').addEventListener('click', function (e) {
+  const btn = e.target.closest('[data-action]');
+  if (!btn) return;
+  const action = btn.dataset.action;
+  const id = parseInt(btn.dataset.id);
+  const name = btn.dataset.name;
+
+  if (action === 'edit') {
+    openModal(id);
+  } else if (action === 'delete') {
+    openDeleteModal(id, name);
+  }
+});

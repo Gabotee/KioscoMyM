@@ -184,7 +184,7 @@
 
 <body>
   <!-- Sidebar overlay (mobile) -->
-  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
   <div class="app-wrapper">
 
@@ -237,7 +237,7 @@
             <div class="user-role">Administrador</div>
           </div>
         </div>
-        <button onclick="logout()" class="btn btn-secondary w-full mt-2 btn-icon-svg" style="font-size:13px;">
+        <button data-action="logout" class="btn btn-secondary w-full mt-2 btn-icon-svg" style="font-size:13px;">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
             <polyline points="16 17 21 12 16 7" />
@@ -252,7 +252,7 @@
     <main class="main-content">
       <div class="page-header">
         <div style="display:flex; align-items:center; gap:12px;">
-          <button class="hamburger-btn" id="hamburger-btn" onclick="toggleSidebar()" aria-label="Abrir menú">
+          <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
           <div>
@@ -261,15 +261,15 @@
           </div>
         </div>
         <div class="stock-header-actions" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-          <button class="theme-toggle" onclick="toggleTheme()" id="theme-toggle-btn" title="Cambiar tema" aria-label="Cambiar tema">☀️</button>
-          <button class="btn btn-secondary btn-sm btn-icon-svg" id="btn-camera" onclick="openCameraScanner()">
+          <button class="theme-toggle" id="theme-toggle-btn" title="Cambiar tema" aria-label="Cambiar tema">☀️</button>
+          <button class="btn btn-secondary btn-sm btn-icon-svg" id="btn-camera">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
               <circle cx="12" cy="13" r="4"></circle>
             </svg>
             <span class="btn-label-desktop">Escanear</span>
           </button>
-          <button class="btn btn-secondary btn-sm btn-icon-svg" id="btn-ingreso" onclick="openIngresoModal()">
+          <button class="btn btn-secondary btn-sm btn-icon-svg" id="btn-ingreso">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
               <line x1="12" y1="22.08" x2="12" y2="12" />
@@ -279,7 +279,7 @@
             </svg>
             <span class="btn-label-desktop">Ingreso</span>
           </button>
-          <button class="btn btn-primary btn-sm" id="btn-add-product" onclick="openModal()">
+          <button class="btn btn-primary btn-sm" id="btn-add-product">
             + Nuevo
           </button>
         </div>
@@ -327,7 +327,7 @@
     <div class="modal">
       <div class="modal-header">
         <h2 class="modal-title" id="modal-title">Nuevo producto</h2>
-        <button class="btn-close" onclick="closeModal()">✕</button>
+        <button class="btn-close" id="btn-close-modal">✕</button>
       </div>
       <div class="modal-body" id="modal-body">
 
@@ -402,8 +402,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
-        <button class="btn btn-primary" id="btn-save" onclick="saveProduct()">
+        <button class="btn btn-secondary" id="btn-cancel-modal">Cancelar</button>
+        <button class="btn btn-primary" id="btn-save">
           <span id="save-text">Guardar producto</span>
           <div id="save-spinner" class="spinner hidden" style="width:14px;height:14px;"></div>
         </button>
@@ -416,7 +416,7 @@
     <div class="modal" style="max-width:400px;">
       <div class="modal-header">
         <h2 class="modal-title">Eliminar producto</h2>
-        <button class="btn-close" onclick="closeDeleteModal()">✕</button>
+        <button class="btn-close" id="btn-close-delete">✕</button>
       </div>
       <div class="modal-body">
         <div class="alert alert-danger" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 16px;">
@@ -426,8 +426,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" onclick="closeDeleteModal()">Cancelar</button>
-        <button class="btn btn-danger" id="btn-confirm-delete" onclick="confirmDelete()">🗑️ Eliminar</button>
+        <button class="btn btn-secondary" id="btn-cancel-delete">Cancelar</button>
+        <button class="btn btn-danger" id="btn-confirm-delete">🗑️ Eliminar</button>
       </div>
     </div>
   </div>
@@ -437,7 +437,7 @@
     <div class="modal ingreso-modal">
       <div class="modal-header">
         <h2 class="modal-title">📥 Registrar Ingreso</h2>
-        <button class="btn-close" onclick="closeIngresoModal()">✕</button>
+        <button class="btn-close" id="btn-close-ingreso">✕</button>
       </div>
       <div class="modal-body">
 
@@ -486,17 +486,17 @@
         <div class="form-group" style="margin-bottom:16px;">
           <label class="form-label">Cantidad</label>
           <div class="qty-controls-ing">
-            <button class="qty-btn-ing" onclick="ingAdjustQty(-1)">−</button>
+            <button class="qty-btn-ing" id="btn-ing-qty-minus">−</button>
             <input type="number" id="ing-qty" class="form-control qty-input-ing" value="1" min="1" />
-            <button class="qty-btn-ing" onclick="ingAdjustQty(1)">+</button>
+            <button class="qty-btn-ing" id="btn-ing-qty-plus">+</button>
           </div>
         </div>
 
 
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" onclick="closeIngresoModal()">Cancelar</button>
-        <button class="btn btn-primary" id="ing-confirm-btn" onclick="registerIngreso()" disabled
+        <button class="btn btn-secondary" id="btn-cancel-ingreso">Cancelar</button>
+        <button class="btn btn-primary" id="ing-confirm-btn" disabled
           style="background:var(--success); box-shadow:0 4px 15px rgba(16,185,129,0.3); border:none;">
           <span id="ing-confirm-text">📥 Registrar ingreso</span>
           <div id="ing-spinner" class="spinner hidden"
@@ -511,13 +511,13 @@
     <div class="modal" style="max-width: 420px; padding: 0;">
       <div class="modal-header" style="padding: 16px 20px; border-bottom: 1px solid var(--border);">
         <h2 class="modal-title">📷 Escanear Producto</h2>
-        <button class="btn-close" onclick="closeCameraScanner()">✕</button>
+        <button class="btn-close" id="btn-close-camera">✕</button>
       </div>
       <div class="modal-body" style="padding: 0;">
         <div id="reader" style="width: 100%; border: none;"></div>
       </div>
       <div class="modal-footer" style="padding: 16px 20px; border-top: 1px solid var(--border); justify-content: center;">
-        <button class="btn btn-secondary w-full" onclick="closeCameraScanner()">Cancelar</button>
+        <button class="btn btn-secondary w-full" id="btn-cancel-camera">Cancelar</button>
       </div>
     </div>
   </div>
@@ -525,23 +525,8 @@
   <div id="toast-container" class="toast-container"></div>
   <script src="/js/api.js"></script>
   <script src="/js/stock.js"></script>
-  <script>
-    function toggleSidebar() {
-      const sidebar = document.querySelector('.sidebar');
-      const overlay = document.getElementById('sidebar-overlay');
-      sidebar.classList.toggle('open');
-      overlay.classList.toggle('active');
-    }
-    function closeSidebar() {
-      document.querySelector('.sidebar').classList.remove('open');
-      document.getElementById('sidebar-overlay').classList.remove('active');
-    }
-    document.querySelectorAll('.nav-link').forEach(function(link) {
-      link.addEventListener('click', function() {
-        if (window.innerWidth <= 768) closeSidebar();
-      });
-    });
-  </script>
+  <script src="/js/sidebar.js"></script>
 </body>
 
 </html>
+

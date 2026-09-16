@@ -66,7 +66,7 @@
       padding: 7px 0;
     }
 
-    .cart-summary-row + .cart-summary-row {
+    .cart-summary-row+.cart-summary-row {
       border-top: 1px solid var(--border);
     }
 
@@ -196,7 +196,7 @@
 
 <body>
   <!-- Sidebar overlay (mobile) -->
-  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
   <div class="app-wrapper">
 
@@ -204,7 +204,8 @@
     <aside class="sidebar">
       <div class="sidebar-brand">
         <div class="sidebar-logo">
-          <img src="/uploads/Logo_Kiosco_MyM.jpeg" alt="Logo Kiosco MyM" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
+          <img src="/uploads/Logo_Kiosco_MyM.jpeg" alt="Logo Kiosco MyM"
+            style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
         </div>
         <div>
           <div class="sidebar-title">Kiosco MyM</div>
@@ -213,10 +214,33 @@
       </div>
       <nav class="sidebar-nav">
         <div class="nav-section-label">Principal</div>
-        <a href="/dashboard.html" class="nav-link"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span> Dashboard</a>
-        <a href="/stock.html" class="nav-link"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span> Stock</a>
-        <a href="/ventas.html" class="nav-link active"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span> Ventas</a>
-        <a href="/movimientos.html" class="nav-link"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></span> Movimientos</a>
+        <a href="/dashboard.html" class="nav-link"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24">
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+            </svg></span> Dashboard</a>
+        <a href="/stock.html" class="nav-link"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24">
+              <path
+                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+              <line x1="12" y1="22.08" x2="12" y2="12" />
+            </svg></span> Stock</a>
+        <a href="/ventas.html" class="nav-link active"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24">
+              <circle cx="9" cy="21" r="1" />
+              <circle cx="20" cy="21" r="1" />
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+            </svg></span> Ventas</a>
+        <a href="/movimientos.html" class="nav-link"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24">
+              <polyline points="17 1 21 5 17 9" />
+              <path d="M3 11V9a4 4 0 0 1 4-4h14" />
+              <polyline points="7 23 3 19 7 15" />
+              <path d="M21 13v2a4 4 0 0 1-4 4H3" />
+            </svg></span> Movimientos</a>
       </nav>
       <div class="sidebar-footer">
         <div class="user-info">
@@ -226,8 +250,12 @@
             <div class="user-role">Administrador</div>
           </div>
         </div>
-        <button onclick="logout()" class="btn btn-secondary w-full mt-2 btn-icon-svg" style="font-size:13px;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <button data-action="logout" class="btn btn-secondary w-full mt-2 btn-icon-svg" style="font-size:13px;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
           Cerrar sesión
         </button>
       </div>
@@ -237,15 +265,19 @@
     <main class="main-content">
       <div class="page-header">
         <div style="display:flex; align-items:center; gap:12px;">
-          <button class="hamburger-btn" id="hamburger-btn" onclick="toggleSidebar()" aria-label="Abrir menú">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
           </button>
           <div>
             <h1 class="page-title">Punto de Venta</h1>
             <p class="page-subtitle">Escaneá productos para sumarlos al carrito y realizar la venta</p>
           </div>
         </div>
-        <button class="theme-toggle" onclick="toggleTheme()" id="theme-toggle-btn" title="Cambiar tema" aria-label="Cambiar tema">☀️</button>
+        <button class="theme-toggle" id="theme-toggle-btn" title="Cambiar tema" aria-label="Cambiar tema">☀️</button>
       </div>
 
       <div class="page-content">
@@ -274,6 +306,59 @@
                 </div>
               </div>
             </div>
+
+            <!-- Sección Vuelto -->
+            <div class="card" id="change-calc-card"
+              style="margin-top:16px; opacity:0.5; pointer-events:none; transition: opacity 0.3s ease;">
+              <div class="card-body">
+                <h3
+                  style="font-size:15px; font-weight:600; margin-bottom:4px; display:flex; align-items:center; gap:8px;">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    style="width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                    <line x1="1" y1="10" x2="23" y2="10" />
+                  </svg>
+                  Cálculo de Vuelto
+                </h3>
+                <p id="change-disabled-hint" style="font-size:11px; color:var(--text-muted); margin-bottom:12px;">
+                  Solo disponible en pagos con Efectivo
+                </p>
+
+                <!-- Monto recibido -->
+                <div class="form-group" style="margin-bottom:20px;">
+                  <label class="form-label">Pago con :</label>
+                  <input type="number" id="amount-received" class="form-control" min="0" step="1"
+                    placeholder="Ej: 5000" />
+                </div>
+
+                <!-- Resultado -->
+                <div
+                  style="background: var(--bg-input); border-radius: 8px; padding: 12px 14px; border: 1px solid var(--border);">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-size:13px; color:var(--text-secondary);">Total a cobrar</span>
+                    <span id="change-total-display"
+                      style="font-size:14px; font-weight:600; color:var(--text-primary);">$ 0.00</span>
+                  </div>
+                  <div
+                    style="display:flex; justify-content:space-between; align-items:center; border-top: 1px solid var(--border); padding-top:8px; margin-top:4px;">
+                    <span style="font-size:14px; font-weight:600; color:var(--text-secondary);">Su vuelto es :</span>
+                    <span id="change-result" style="font-size:24px; font-weight:700; color:var(--success);">$
+                      0.00</span>
+                  </div>
+                  <!-- Alerta si monto insuficiente -->
+                  <div id="change-warning" class="hidden"
+                    style="margin-top:8px; padding:6px 10px; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.25); border-radius:6px; font-size:12px; color:#ef4444; display:flex; align-items:center; gap:6px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                      style="width:13px;height:13px;stroke:#ef4444;stroke-width:2.5;fill:none;flex-shrink:0;">
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="12" y1="8" x2="12" y2="12" />
+                      <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                    Monto insuficiente
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Panel derecho: carrito -->
@@ -281,17 +366,22 @@
             <div class="card">
               <div class="card-header">
                 <h3 style="font-size:15px; font-weight:600;">Productos seleccionados</h3>
-                <button class="btn btn-secondary btn-sm" onclick="clearCart()">Limpiar</button>
+                <button class="btn btn-secondary btn-sm" id="btn-clear-cart">Limpiar</button>
               </div>
 
               <div id="cart-body">
-                  <div class="empty-state">
-                    <div class="empty-state-icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:48px;height:48px;stroke:var(--text-muted);stroke-width:1.2;fill:none;stroke-linecap:round;stroke-linejoin:round;"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-                    </div>
-                    <div class="empty-state-title">Lista Vacia</div>
-                    <div class="empty-state-text">Escaneá un producto para empezar</div>
+                <div class="empty-state">
+                  <div class="empty-state-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                      style="width:48px;height:48px;stroke:var(--text-muted);stroke-width:1.2;fill:none;stroke-linecap:round;stroke-linejoin:round;">
+                      <circle cx="9" cy="21" r="1" />
+                      <circle cx="20" cy="21" r="1" />
+                      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                    </svg>
                   </div>
+                  <div class="empty-state-title">Lista Vacia</div>
+                  <div class="empty-state-text">Escaneá un producto para empezar</div>
+                </div>
               </div>
 
               <!-- Footer con totales y pago -->
@@ -304,17 +394,23 @@
                   <div id="cart-surcharge-row" class="hidden">
                     <div class="cart-summary-row">
                       <span class="cart-total-label">Subtotal</span>
-                      <span id="cart-subtotal-val" style="font-size:15px; font-weight:600; color:var(--text-primary);">$ 0.00</span>
+                      <span id="cart-subtotal-val" style="font-size:15px; font-weight:600; color:var(--text-primary);">$
+                        0.00</span>
                     </div>
                     <div class="cart-summary-row">
                       <span class="surcharge-label">
                         <span class="surcharge-badge" id="surcharge-badge-label">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:11px;height:11px;stroke:#f59e0b;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            style="width:11px;height:11px;stroke:#f59e0b;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                            <line x1="12" y1="18" x2="12.01" y2="18" />
+                          </svg>
                           Transf.
                         </span>
                         Recargo
                       </span>
-                      <span id="cart-surcharge-val" style="font-size:15px; font-weight:600; color:#f59e0b;">+$ 0.00</span>
+                      <span id="cart-surcharge-val" style="font-size:15px; font-weight:600; color:#f59e0b;">+$
+                        0.00</span>
                     </div>
                   </div>
 
@@ -329,21 +425,38 @@
                 <div class="card-body" style="padding-top: 10px;">
                   <label class="form-label">Método de pago</label>
                   <div class="payment-options">
-                    <button class="payment-btn active" id="btn-pay-efectivo" onclick="setPaymentMethod('efectivo')">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:15px;height:15px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:5px;"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                    <button class="payment-btn" id="btn-pay-efectivo" onclick="setPaymentMethod('efectivo')">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        style="width:15px;height:15px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:5px;">
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                        <line x1="1" y1="10" x2="23" y2="10" />
+                      </svg>
                       Efectivo
                     </button>
-                    <button class="payment-btn" id="btn-pay-transferencia" onclick="setPaymentMethod('transferencia')">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:15px;height:15px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:5px;"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                    <button class="payment-btn" id="btn-pay-transferencia">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        style="width:15px;height:15px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:5px;">
+                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                        <line x1="12" y1="18" x2="12.01" y2="18" />
+                      </svg>
                       Transferencia
                     </button>
-                    <button class="payment-btn" id="btn-pay-qr" onclick="setPaymentMethod('qr')">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width:15px;height:15px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:5px;"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3"/><rect x="18" y="18" width="3" height="3"/><rect x="14" y="18" width="3" height="3" style="opacity:0"/><line x1="18" y1="14" x2="21" y2="14"/></svg>
+                    <button class="payment-btn" id="btn-pay-qr">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        style="width:15px;height:15px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:middle;margin-right:5px;">
+                        <rect x="3" y="3" width="7" height="7" rx="1" />
+                        <rect x="14" y="3" width="7" height="7" rx="1" />
+                        <rect x="3" y="14" width="7" height="7" rx="1" />
+                        <rect x="14" y="14" width="3" height="3" />
+                        <rect x="18" y="18" width="3" height="3" />
+                        <rect x="14" y="18" width="3" height="3" style="opacity:0" />
+                        <line x1="18" y1="14" x2="21" y2="14" />
+                      </svg>
                       QR
                     </button>
                   </div>
 
-                  <button class="btn btn-primary w-full" id="btn-checkout" onclick="checkout()"
+                  <button class="btn btn-primary w-full" id="btn-checkout"
                     style="padding:14px; font-size:16px; font-weight:600;">
                     <span id="checkout-text">Finalizar Venta</span>
                     <div id="checkout-spinner" class="spinner hidden"
@@ -363,23 +476,7 @@
   <div id="toast-container" class="toast-container"></div>
   <script src="/js/api.js"></script>
   <script src="/js/ventas.js"></script>
-  <script>
-    function toggleSidebar() {
-      const sidebar = document.querySelector('.sidebar');
-      const overlay = document.getElementById('sidebar-overlay');
-      sidebar.classList.toggle('open');
-      overlay.classList.toggle('active');
-    }
-    function closeSidebar() {
-      document.querySelector('.sidebar').classList.remove('open');
-      document.getElementById('sidebar-overlay').classList.remove('active');
-    }
-    document.querySelectorAll('.nav-link').forEach(function(link) {
-      link.addEventListener('click', function() {
-        if (window.innerWidth <= 768) closeSidebar();
-      });
-    });
-  </script>
+  <script src="/js/sidebar.js"></script>
 </body>
 
 </html>

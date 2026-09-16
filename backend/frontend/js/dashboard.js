@@ -145,3 +145,13 @@ function renderLowStock(products) {
 function escHtml(str) {
   return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
+
+// Listeners de botones estáticos
+document.addEventListener('DOMContentLoaded', function () {
+  const btnNuevoMovimiento = document.getElementById('btn-nuevo-movimiento');
+  if (btnNuevoMovimiento) {
+    btnNuevoMovimiento.addEventListener('click', function () {
+      window.location.href = '/stock.html';
+    });
+  }
+});

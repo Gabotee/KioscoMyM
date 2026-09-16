@@ -89,7 +89,11 @@ function renderHistory(movements) {
                 <button
                   class="btn btn-danger btn-icon-sm"
                   title="Reversar movimiento"
-                  onclick="reverseMovement(${m.id}, '${esc(m.product_name)}', ${m.quantity}, '${m.type}')"
+                  data-action="reverse"
+                  data-id="${m.id}"
+                  data-name="${esc(m.product_name)}"
+                  data-qty="${m.quantity}"
+                  data-type="${m.type}"
                 >↩</button>
               </td>
             </tr>
@@ -115,3 +119,20 @@ async function reverseMovement(id, productName, qty, type) {
 function esc(str) {
   return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
+
+// Listeners de botones estáticos
+document.addEventListener('DOMContentLoaded', function () {
+  const btnFiltrar = document.getElementById('btn-filtrar');
+  if (btnFiltrar) btnFiltrar.addEventListener('click', loadHistory);
+});
+
+// Event delegation para botones de reversar (generados dinámicamente)
+document.getElementById('history-body').addEventListener('click', function (e) {
+  const btn = e.target.closest('[data-action="reverse"]');
+  if (!btn) return;
+  const id = parseInt(btn.dataset.id);
+  const name = btn.dataset.name;
+  const qty = parseInt(btn.dataset.qty);
+  const type = btn.dataset.type;
+  reverseMovement(id, name, qty, type);
+});
